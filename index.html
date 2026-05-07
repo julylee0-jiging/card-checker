@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>年会費回収チェッカー</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f4f6f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      color: #333;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #0066cc;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .result {
+      margin-top: 30px;
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 20px;
+      line-height: 1.8;
+      display: none;
+    }
+
+    .result h2 {
+      margin-top: 0;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .good {
+      color: #008000;
+      font-weight: bold;
+    }
+
+    .normal {
+      color: #cc8800;
+      font-weight: bold;
+    }
+
+    .bad {
+      color: #cc0000;
+      font-weight: bold;
+    }
+
+    .point {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      input {
+        font-size: 16px;
+      }
+
+      button {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>年会費回収チェッカー</h1>
+
+    <div class="subtitle">
+      クレジットカードの年会費、<br>
+      本当に元が取れているか確認してみましょう。
+    </div>
+
+    <label>カード年会費（円）</label>
+    <input type="number" id="annualFee" placeholder="例：49500">
+
+    <label>年間カード利用額（円）</label>
+    <input type="number" id="usage" placeholder="例：1500000">
+
+    <label>ポイント還元率（%）</label>
+    <input type="number" id="rate" step="0.1" placeholder="例：1.0">
+
+    <label>ホテル特典やラウンジ価値（年間・円）</label>
+    <input type="number" id="benefit" placeholder="例：30000">
+
+    <button onclick="calculate()">診断する</button>
+
+    <div class="result" id="result">
+
+      <h2 id="judge"></h2>
+
+      <div class="point" id="detail"></div>
+
+    </div>
+
+    <div class="footer">
+      ※簡易計算です。<br>
+      マイル価値やキャンペーンは含まれていません。
+    </div>
+
+  </div>
+
+  <script>
+
+    function calculate() {
+
+      const annualFee = Number(document.getElementById('annualFee').value);
+      const usage = Number(document.getElementById('usage').value);
+      const rate = Number(document.getElementById('rate').value);
+      const benefit = Number(document.getElementById('benefit').value);
+
+      const pointValue = usage * (rate / 100);
+
+      const totalReturn = pointValue + benefit;
+
+      const profit = totalReturn - annualFee;
+
+      const result = document.getElementById('result');
+      const judge = document.getElementById('judge');
+      const detail = document.getElementById('detail');
+
+      result.style.display = 'block';
+
+      let message = '';
+      let className = '';
+
+      if (profit >= 20000) {
+        message = 'かなりお得です！';
+        className = 'good';
+      } else if (profit >= 0) {
+        message = '元は取れています';
+        className = 'normal';
+      } else {
+        message = '年会費負けの可能性があります';
+        className = 'bad';
+      }
+
+      judge.className = className;
+      judge.innerText = message;
+
+      detail.innerHTML = `
+        還元額：約 <strong>${Math.round(pointValue).toLocaleString()}円</strong><br>
+        特典価値：約 <strong>${benefit.toLocaleString()}円</strong><br>
+        合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br><br>
+
+        年会費との差額：<br>
+        <strong style="font-size:24px;">
+          ${profit.toLocaleString()}円
+        </strong>
+      `;
+    }
+
+  </script>
+
+</body>
+</html>
