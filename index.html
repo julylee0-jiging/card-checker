@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6TWXJLBELP"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -13,112 +12,181 @@ gtag('config', 'G-6TWXJLBELP');
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4714907038383356"
      crossorigin="anonymous"></script>
-
-<meta charset="UTF-8">
+     
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>いわっさん年会費回収チェッカー</title>
 
   <style>
     body {
       margin: 0;
       padding: 20px;
-      background: #f4f6f9;
+      background: linear-gradient(180deg, #f3f5f8 0%, #e9edf3 100%);
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      color: #333;
+      color: #263238;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 560px;
       margin: auto;
-      background: #fff;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
     }
 
     h1 {
       font-size: 26px;
       text-align: center;
-      margin-bottom: 10px;
-      color: #1a1a1a;
+      margin-bottom: 8px;
+      color: #1f2d3d;
+      line-height: 1.35;
     }
 
     .subtitle {
       text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 25px;
-      line-height: 1.6;
+      font-size: 15px;
+      color: #667085;
+      margin-bottom: 26px;
+      line-height: 1.7;
     }
 
     label {
       display: block;
       margin-top: 18px;
       margin-bottom: 8px;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 15px;
+      color: #344054;
     }
 
     input {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       font-size: 18px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      border: 1px solid #d0d5dd;
+      border-radius: 12px;
       box-sizing: border-box;
+      background: #ffffff;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2f6fed;
+      box-shadow: 0 0 0 3px rgba(47,111,237,0.12);
     }
 
     button {
       width: 100%;
       margin-top: 30px;
-      padding: 16px;
+      padding: 17px;
       border: none;
-      border-radius: 12px;
-      background: #0066cc;
+      border-radius: 14px;
+      background: #1f2d3d;
       color: white;
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
     }
 
     button:hover {
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
     .result {
-      margin-top: 30px;
-      background: #f8fafc;
-      border-radius: 14px;
-      padding: 20px;
-      line-height: 1.8;
+      margin-top: 32px;
       display: none;
     }
 
-    .result h2 {
-      margin-top: 0;
-      font-size: 24px;
+    .result-card {
+      border-radius: 20px;
+      padding: 24px;
+      background: linear-gradient(135deg, #172033 0%, #29364f 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 22px rgba(23,32,51,0.22);
+    }
+
+    .result-label {
+      font-size: 14px;
+      opacity: 0.85;
       text-align: center;
+      margin-bottom: 8px;
     }
 
-    .good {
-      color: #008000;
-      font-weight: bold;
+    .result-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      line-height: 1.4;
     }
 
-    .normal {
-      color: #cc8800;
-      font-weight: bold;
+    .profit-box {
+      background: rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 18px;
     }
 
-    .bad {
-      color: #cc0000;
-      font-weight: bold;
+    .profit-label {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 6px;
     }
 
-    .point {
-      font-size: 18px;
-      margin-top: 10px;
+    .profit-amount {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .recovery-rate {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 18px;
+      opacity: 0.95;
+    }
+
+    .comment {
+      background: #ffffff;
+      color: #1f2d3d;
+      border-radius: 16px;
+      padding: 16px;
+      line-height: 1.7;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .breakdown {
+      background: #f8fafc;
+      color: #344054;
+      border-radius: 16px;
+      padding: 18px;
+      line-height: 1.9;
+      font-size: 15px;
+      border: 1px solid #e4e7ec;
+    }
+
+    .breakdown strong {
+      color: #111827;
+      font-size: 17px;
+    }
+
+    .good-text {
+      color: #12b76a;
+      font-weight: 900;
+    }
+
+    .normal-text {
+      color: #f79009;
+      font-weight: 900;
+    }
+
+    .bad-text {
+      color: #f04438;
+      font-weight: 900;
     }
 
     .footer {
@@ -126,12 +194,21 @@ gtag('config', 'G-6TWXJLBELP');
       text-align: center;
       font-size: 12px;
       color: #888;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 480px) {
+      body {
+        padding: 14px;
+      }
+
+      .container {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
       h1 {
-        font-size: 22px;
+        font-size: 23px;
       }
 
       input {
@@ -141,6 +218,10 @@ gtag('config', 'G-6TWXJLBELP');
       button {
         font-size: 18px;
       }
+
+      .profit-amount {
+        font-size: 30px;
+      }
     }
   </style>
 </head>
@@ -149,11 +230,11 @@ gtag('config', 'G-6TWXJLBELP');
 
   <div class="container">
 
-    <h1>いわっさん年会費回収チェッカー</h1>
+    <h1>いわっさん<br>年会費回収チェッカー</h1>
 
     <div class="subtitle">
       クレジットカードの年会費、<br>
-      本当に元が取れているか確認してみましょう。
+      本当に元が取れているか簡単診断できます。
     </div>
 
     <label>カード年会費（円）</label>
@@ -165,76 +246,100 @@ gtag('config', 'G-6TWXJLBELP');
     <label>ポイント還元率（%）</label>
     <input type="number" id="rate" step="0.1" placeholder="例：1.0">
 
-    <label>ホテル特典やラウンジ価値（年間・円）</label>
+    <label>ホテル特典・ラウンジなどの価値（年間・円）</label>
     <input type="number" id="benefit" placeholder="例：30000">
 
     <button onclick="calculate()">診断する</button>
 
     <div class="result" id="result">
+      <div class="result-card">
+        <div class="result-label">診断結果</div>
+        <div class="result-title" id="judge"></div>
 
-      <h2 id="judge"></h2>
+        <div class="profit-box">
+          <div class="profit-label">年会費との差額</div>
+          <div class="profit-amount" id="profitAmount"></div>
+        </div>
 
-      <div class="point" id="detail"></div>
+        <div class="recovery-rate" id="recoveryRate"></div>
 
+        <div class="comment" id="comment"></div>
+      </div>
+
+      <div class="breakdown" id="detail"></div>
     </div>
 
     <div class="footer">
-      ※簡易計算です。<br>
-      マイル価値やキャンペーンは含まれていません。
+      ※このチェッカーは簡易計算です。<br>
+      マイル価値、キャンペーン、税金支払い時の還元率などは個別にご確認ください。
     </div>
 
   </div>
 
   <script>
-
     function calculate() {
-
       const annualFee = Number(document.getElementById('annualFee').value);
       const usage = Number(document.getElementById('usage').value);
       const rate = Number(document.getElementById('rate').value);
       const benefit = Number(document.getElementById('benefit').value);
 
+      if (!annualFee || annualFee <= 0) {
+        alert('カード年会費を入力してください。');
+        return;
+      }
+
       const pointValue = usage * (rate / 100);
-
       const totalReturn = pointValue + benefit;
-
       const profit = totalReturn - annualFee;
+      const recoveryRate = (totalReturn / annualFee) * 100;
 
       const result = document.getElementById('result');
       const judge = document.getElementById('judge');
+      const profitAmount = document.getElementById('profitAmount');
+      const recoveryRateBox = document.getElementById('recoveryRate');
+      const comment = document.getElementById('comment');
       const detail = document.getElementById('detail');
 
       result.style.display = 'block';
 
       let message = '';
       let className = '';
+      let commentText = '';
 
       if (profit >= 20000) {
-        message = 'かなりお得です！';
-        className = 'good';
+        message = 'かなりお得です';
+        className = 'good-text';
+        commentText = '年会費をしっかり回収できている可能性が高いです。ポイント還元だけでなく、ホテル特典やラウンジなどを活用できている人向けの結果です。';
       } else if (profit >= 0) {
         message = '元は取れています';
-        className = 'normal';
+        className = 'normal-text';
+        commentText = '年会費分はおおむね回収できています。ただし、特典を使わない年があると損益が下がるため、毎年の利用状況を確認するのがおすすめです。';
       } else {
         message = '年会費負けの可能性があります';
-        className = 'bad';
+        className = 'bad-text';
+        commentText = '現時点の入力条件では、年会費を回収しきれていない可能性があります。利用額、特典利用、またはカードの見直しを検討してもよいかもしれません。';
       }
 
-      judge.className = className;
+      judge.className = 'result-title ' + className;
       judge.innerText = message;
 
+      const profitSign = profit >= 0 ? '+' : '';
+      profitAmount.innerText = `${profitSign}${Math.round(profit).toLocaleString()}円`;
+
+      recoveryRateBox.innerText = `回収率：約 ${Math.round(recoveryRate)}％`;
+
+      comment.innerText = commentText;
+
       detail.innerHTML = `
-        還元額：約 <strong>${Math.round(pointValue).toLocaleString()}円</strong><br>
-        特典価値：約 <strong>${benefit.toLocaleString()}円</strong><br>
-        合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br><br>
-
-        年会費との差額：<br>
-        <strong style="font-size:24px;">
-          ${profit.toLocaleString()}円
-        </strong>
+        <strong>内訳</strong><br>
+        ポイント還元額：約 <strong>${Math.round(pointValue).toLocaleString()}円</strong><br>
+        特典価値：約 <strong>${Math.round(benefit).toLocaleString()}円</strong><br>
+        合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br>
+        カード年会費：約 <strong>${Math.round(annualFee).toLocaleString()}円</strong>
       `;
-    }
 
+      result.scrollIntoView({ behavior: 'smooth' });
+    }
   </script>
 
 </body>
