@@ -436,15 +436,15 @@ function applyValueStyle() {
       let commentText = '';
 
       if (profit >= 20000) {
-        message = 'かなりお得です';
+        message = 'かなり元が取れています！';
         className = 'good-text';
         commentText = '年会費をしっかり回収できている可能性が高いです。ポイント還元だけでなく、ホテル特典やラウンジなどを活用できている人向けの結果です。';
       } else if (profit >= 0) {
-        message = '元は取れています';
+        message = 'しっかり年会費回収できています';
         className = 'normal-text';
         commentText = '年会費分はおおむね回収できています。ただし、特典を使わない年があると損益が下がるため、毎年の利用状況を確認するのがおすすめです。';
       } else {
-        message = '年会費負けの可能性があります';
+        message = '現状では年会費負けの可能性があります';
         className = 'bad-text';
         commentText = '現時点の入力条件では、年会費を回収しきれていない可能性があります。利用額、特典利用、またはカードの見直しを検討してもよいかもしれません。';
       }
@@ -453,10 +453,15 @@ function applyValueStyle() {
       judge.innerText = message;
 
       const profitSign = profit >= 0 ? '+' : '';
-      profitAmount.innerText = `${profitSign}${Math.round(profit).toLocaleString()}円`;
-
-      recoveryRateBox.innerText = `回収率：約 ${Math.round(recoveryRate)}％`;
-
+　　　　　profitAmount.innerHTML =
+  `<span style="font-size:28px;font-weight:bold;">
+    ${profitSign}¥${Math.round(profit).toLocaleString()}
+  </span>`;
+recoveryRateBox.innerHTML =
+  `<span style="font-size:32px;font-weight:bold;">
+    ${Math.round(recoveryRate)}%
+  </span><br>
+  回収率`;
       comment.innerText = commentText;
 
       detail.innerHTML = `
