@@ -70,6 +70,28 @@ gtag('config', 'G-6TWXJLBELP');
       box-sizing: border-box;
       background: #ffffff;
     }
+       select {
+  width: 100%;
+  padding: 15px;
+  font-size: 17px;
+  border: 1px solid #d0d5dd;
+  border-radius: 12px;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+select:focus {
+  outline: none;
+  border-color: #2f6fed;
+  box-shadow: 0 0 0 3px rgba(47,111,237,0.12);
+}
+
+.preset-note {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #667085;
+  line-height: 1.6;
+}
 
     input:focus {
       outline: none;
@@ -236,6 +258,19 @@ gtag('config', 'G-6TWXJLBELP');
       クレジットカードの年会費、<br>
       本当に元が取れているか簡単診断できます。
     </div>
+<label>カードを選択</label>
+<select id="cardSelect" onchange="applyCardPreset()">
+  <option value="manual">手入力する</option>
+  <option value="hilton-basic">ヒルトン・オナーズ アメックス一般</option>
+  <option value="hilton-premium">ヒルトン・オナーズ アメックス・プレミアム</option>
+  <option value="marriott-basic">Marriott Bonvoy アメックス一般</option>
+  <option value="marriott-premium">Marriott Bonvoy アメックス・プレミアム</option>
+  <option value="ana-wide-gold">ANAワイドゴールドカード</option>
+</select>
+
+<div class="preset-note" id="cardNote">
+  ※カードを選ぶと、年会費・還元率・特典価値例が自動入力されます。
+</div>
 <label>利用スタイル</label>
 <select id="valueStyle" onchange="applyValueStyle()">
   <option value="standard">標準</option>
@@ -287,6 +322,60 @@ gtag('config', 'G-6TWXJLBELP');
   </div>
 
   <script>
+const cardPresets = {
+  manual: {
+    annualFee: '',
+    rate: '',
+    benefit: '',
+    note: '手入力モードです。ご自身のカード条件を入力してください。'
+  },
+  'hilton-basic': {
+    annualFee: 16500,
+    rate: 1.5,
+    benefit: 30000,
+    note: 'ヒルトン一般カードの簡易目安です。'
+  },
+  'hilton-premium': {
+    annualFee: 66000,
+    rate: 3.0,
+    benefit: 60000,
+    note: 'ヒルトンプレミアムカードの簡易目安です。'
+  },
+  'marriott-basic': {
+    annualFee: 34100,
+    rate: 2.0,
+    benefit: 30000,
+    note: 'Marriott Bonvoy アメックス一般カードの簡易目安です。'
+  },
+  'marriott-premium': {
+    annualFee: 82500,
+    rate: 3.0,
+    benefit: 60000,
+    note: 'Marriott Bonvoy アメックス・プレミアムの簡易目安です。'
+  },
+  'ana-wide-gold': {
+    annualFee: 15400,
+    rate: 1.0,
+    benefit: 10000,
+    note: 'ANAワイドゴールドカードの簡易目安です。'
+  }
+};
+
+function applyCardPreset() {
+  const selected = document.getElementById('cardSelect').value;
+  const preset = cardPresets[selected];
+
+  document.getElementById('annualFee').value = preset.annualFee;
+  document.getElementById('rate').value = preset.rate;
+  document.getElementById('benefit').value = preset.benefit;
+
+  originalBenefitValue = Number(preset.benefit) || 0;
+
+  document.getElementById('cardNote').innerText = preset.note;
+
+  applyValueStyle();
+}
+     
       let originalBenefitValue = null;
 
 function applyValueStyle() {
