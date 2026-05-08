@@ -236,7 +236,17 @@ gtag('config', 'G-6TWXJLBELP');
       クレジットカードの年会費、<br>
       本当に元が取れているか簡単診断できます。
     </div>
+<label>利用スタイル</label>
+<select id="valueStyle" onchange="applyValueStyle()">
+  <option value="standard">標準</option>
+  <option value="conservative">保守派</option>
+  <option value="hotel">ホテル好き</option>
+  <option value="mile">マイル重視</option>
+</select>
 
+<div class="preset-note" id="styleNote">
+  ※利用スタイルによって、特典価値の目安が変わります。
+</div>
     <label>カード年会費（円）</label>
     <input type="number" id="annualFee" placeholder="例：49500">
 
@@ -277,6 +287,32 @@ gtag('config', 'G-6TWXJLBELP');
   </div>
 
   <script>
+       function applyValueStyle() {
+  const style = document.getElementById('valueStyle').value;
+  const benefitInput = document.getElementById('benefit');
+  const styleNote = document.getElementById('styleNote');
+
+  let baseBenefit = Number(benefitInput.value) || 0;
+
+  if (style === 'conservative') {
+    benefitInput.value = Math.round(baseBenefit * 0.6);
+    styleNote.innerText = '保守派：特典価値を低めに見積もります。';
+  }
+
+  if (style === 'standard') {
+    styleNote.innerText = '標準：一般的な目安で計算します。';
+  }
+
+  if (style === 'hotel') {
+    benefitInput.value = Math.round(baseBenefit * 1.4);
+    styleNote.innerText = 'ホテル好き：朝食・ラウンジ・無料宿泊の価値を高めに見積もります。';
+  }
+
+  if (style === 'mile') {
+    benefitInput.value = Math.round(baseBenefit * 1.2);
+    styleNote.innerText = 'マイル重視：マイルやポイント移行価値を少し高めに見積もります。';
+  }
+}
     function calculate() {
       const annualFee = Number(document.getElementById('annualFee').value);
       const usage = Number(document.getElementById('usage').value);
