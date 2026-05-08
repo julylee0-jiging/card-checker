@@ -288,8 +288,12 @@ select:focus {
     <label>年間カード利用額（円）</label>
     <input type="number" id="usage" placeholder="例：1500000">
 
-    <label>ポイント還元率（%）</label>
-    <input type="number" id="rate" step="0.1" placeholder="例：1.0">
+ 
+　　　<label>実質還元率（円換算・%）</label>
+<input type="number" id="rate" step="0.1" placeholder="例：1.0">
+<div class="preset-note">
+  ※ホテル系ポイントは1ポイントの価値が利用方法で変わるため、公式のポイント付与率をそのまま%換算していません。
+</div>
 
     <label>ホテル特典・ラウンジなどの価値（年間・円）</label>
     <input type="number" id="benefit" placeholder="例：30000">
