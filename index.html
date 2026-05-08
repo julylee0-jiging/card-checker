@@ -287,31 +287,35 @@ gtag('config', 'G-6TWXJLBELP');
   </div>
 
   <script>
-       function applyValueStyle() {
+      let originalBenefitValue = null;
+
+function applyValueStyle() {
   const style = document.getElementById('valueStyle').value;
   const benefitInput = document.getElementById('benefit');
   const styleNote = document.getElementById('styleNote');
 
-  let baseBenefit = Number(benefitInput.value) || 0;
+  if (originalBenefitValue === null) {
+    originalBenefitValue = Number(benefitInput.value) || 0;
+  }
+
+  const baseBenefit = originalBenefitValue;
+
+  let multiplier = 1;
+  let note = '標準：一般的な目安で計算します。';
 
   if (style === 'conservative') {
-    benefitInput.value = Math.round(baseBenefit * 0.6);
-    styleNote.innerText = '保守派：特典価値を低めに見積もります。';
+    multiplier = 0.6;
+    note = '保守派：特典価値を低めに見積もります。';
+  } else if (style === 'hotel') {
+    multiplier = 1.4;
+    note = 'ホテル好き：朝食・ラウンジ・無料宿泊の価値を高めに見積もります。';
+  } else if (style === 'mile') {
+    multiplier = 1.2;
+    note = 'マイル重視：マイルやポイント移行価値を少し高めに見積もります。';
   }
 
-  if (style === 'standard') {
-    styleNote.innerText = '標準：一般的な目安で計算します。';
-  }
-
-  if (style === 'hotel') {
-    benefitInput.value = Math.round(baseBenefit * 1.4);
-    styleNote.innerText = 'ホテル好き：朝食・ラウンジ・無料宿泊の価値を高めに見積もります。';
-  }
-
-  if (style === 'mile') {
-    benefitInput.value = Math.round(baseBenefit * 1.2);
-    styleNote.innerText = 'マイル重視：マイルやポイント移行価値を少し高めに見積もります。';
-  }
+  benefitInput.value = Math.round(baseBenefit * multiplier);
+  styleNote.innerText = note;
 }
     function calculate() {
       const annualFee = Number(document.getElementById('annualFee').value);
