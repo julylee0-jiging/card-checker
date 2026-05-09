@@ -270,7 +270,16 @@ select:focus {
     </div>
 <label>カードを選択</label>
 <select id="cardSelect" onchange="applyCardPreset()">
-     <div style="text-align:center;margin-top:16px;">
+ 
+  <option value="manual">手入力する</option>
+  <option value="hilton-basic">ヒルトン・オナーズ アメックス一般</option>
+  <option value="hilton-premium">ヒルトン・オナーズ アメックス・プレミアム</option>
+  <option value="marriott-basic">Marriott Bonvoy アメックス一般</option>
+  <option value="marriott-premium">Marriott Bonvoy アメックス・プレミアム</option>
+  <option value="ana-wide-gold">ANAワイドゴールドカード</option>
+</select>
+
+<div style="text-align:center;margin-top:16px;">
   <img
     id="cardImage"
     src=""
@@ -283,13 +292,10 @@ select:focus {
     "
   >
 </div>
-  <option value="manual">手入力する</option>
-  <option value="hilton-basic">ヒルトン・オナーズ アメックス一般</option>
-  <option value="hilton-premium">ヒルトン・オナーズ アメックス・プレミアム</option>
-  <option value="marriott-basic">Marriott Bonvoy アメックス一般</option>
-  <option value="marriott-premium">Marriott Bonvoy アメックス・プレミアム</option>
-  <option value="ana-wide-gold">ANAワイドゴールドカード</option>
-</select>
+
+
+
+       
 
 <div class="preset-note" id="cardNote">
   ※カードを選ぶと、年会費・還元率・特典価値例が自動入力されます。
