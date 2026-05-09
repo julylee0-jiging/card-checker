@@ -270,6 +270,19 @@ select:focus {
     </div>
 <label>カードを選択</label>
 <select id="cardSelect" onchange="applyCardPreset()">
+     <div style="text-align:center;margin-top:16px;">
+  <img
+    id="cardImage"
+    src=""
+    style="
+      width:100%;
+      max-width:340px;
+      border-radius:16px;
+      display:none;
+      box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    "
+  >
+</div>
   <option value="manual">手入力する</option>
   <option value="hilton-basic">ヒルトン・オナーズ アメックス一般</option>
   <option value="hilton-premium">ヒルトン・オナーズ アメックス・プレミアム</option>
@@ -417,6 +430,18 @@ function applyCardPreset() {
 
   document.getElementById('cardNote').innerText = preset.note;
 document.getElementById('sourceBox').innerText = preset.source;
+     const cardImage = document.getElementById('cardImage');
+
+const imageMap = {
+  'hilton-premium': 'images/hilton-premium.png'
+};
+
+if (imageMap[cardType]) {
+  cardImage.src = imageMap[cardType];
+  cardImage.style.display = 'block';
+} else {
+  cardImage.style.display = 'none';
+}
   applyValueStyle();
 }
      
