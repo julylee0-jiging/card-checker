@@ -245,6 +245,16 @@ select:focus {
         font-size: 30px;
       }
     }
+    .source-box {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e4e7ec;
+  color: #344054;
+  font-size: 13px;
+  line-height: 1.7;
+}
   </style>
 </head>
 
@@ -270,6 +280,9 @@ select:focus {
 
 <div class="preset-note" id="cardNote">
   ※カードを選ぶと、年会費・還元率・特典価値例が自動入力されます。
+</div>
+<div class="source-box" id="sourceBox">
+  カードを選択すると、ポイント付与条件の補足が表示されます。
 </div>
 <label>利用スタイル</label>
 <select id="valueStyle" onchange="applyValueStyle()">
@@ -331,37 +344,43 @@ const cardPresets = {
     annualFee: '',
     rate: '',
     benefit: '',
-    note: '手入力モードです。ご自身のカード条件を入力してください。'
+    note: '手入力モードです。ご自身のカード条件を入力してください。',
+    source: 'カードを選択しない場合は、年会費・実質還元率・特典価値をご自身で入力してください。'
   },
   'hilton-basic': {
     annualFee: 16500,
     rate: '',
     benefit: 30000,
-    note: '公式上は通常100円=2ヒルトン・オナーズ・ボーナスポイント。一部加盟店では100円=1ポイントです。円換算の実質還元率はご自身で入力してください。'
+    note: 'ヒルトン一般カードの簡易目安です。',
+    source: 'ヒルトン・オナーズ アメリカン・エキスプレス・カードは、公式上、通常利用で100円＝2ヒルトン・オナーズ・ボーナスポイント、一部加盟店では100円＝1ポイントとして加算されます。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
   },
   'hilton-premium': {
     annualFee: 66000,
     rate: '',
     benefit: 60000,
-    note: '公式上は通常100円=3ヒルトン・オナーズ・ボーナスポイント。一部加盟店では100円=1.5ポイントです。円換算の実質還元率はご自身で入力してください。'
+    note: 'ヒルトンプレミアムカードの簡易目安です。',
+    source: 'ヒルトン・オナーズ アメリカン・エキスプレス・プレミアム・カードは、公式上、通常利用で100円＝3ヒルトン・オナーズ・ボーナスポイント、一部加盟店では100円＝1.5ポイントとして加算されます。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
   },
   'marriott-basic': {
     annualFee: 34100,
     rate: '',
     benefit: 30000,
-    note: '公式上は通常100円=2 Marriott Bonvoyポイント。ホテル利用などでは付与率が変わります。円換算の実質還元率はご自身で入力してください。'
+    note: 'Marriott Bonvoy アメックス一般カードの簡易目安です。',
+    source: 'Marriott Bonvoy アメリカン・エキスプレス・カードは、公式上、通常利用で100円＝2 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝5ポイント、対象航空会社・外貨払いでは100円＝3ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
   },
   'marriott-premium': {
     annualFee: 82500,
     rate: '',
     benefit: 60000,
-    note: '公式上は通常100円=3 Marriott Bonvoyポイント。ホテル利用では100円=6ポイントです。円換算の実質還元率はご自身で入力してください。'
+    note: 'Marriott Bonvoy アメックス・プレミアムの簡易目安です。',
+    source: 'Marriott Bonvoy アメリカン・エキスプレス・プレミアム・カードは、公式上、通常利用で100円＝3 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝6ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
   },
   'ana-wide-gold': {
     annualFee: '',
     rate: '',
     benefit: '',
-    note: 'ANA系カードはブランド・移行コース・年会費で条件が変わるため、いったん手入力してください。'
+    note: 'ANA系カードはブランド・移行コース・年会費で条件が変わるため、いったん手入力してください。',
+    source: 'ANAゴールドカードは、ANA公式上、クレジットカード会社のポイントをマイルへ移行した場合、100円の支払いにつき1マイル相当が目安です。ただし、発行会社・移行コース・ANAカードマイルプラス対象利用などで条件が変わるため、実質還元率は手入力してください。'
   }
 };
 
@@ -376,7 +395,7 @@ function applyCardPreset() {
   originalBenefitValue = Number(preset.benefit) || 0;
 
   document.getElementById('cardNote').innerText = preset.note;
-
+document.getElementById('sourceBox').innerText = preset.source;
   applyValueStyle();
 }
      
