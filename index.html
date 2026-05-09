@@ -429,31 +429,28 @@ function applyCardPreset() {
   originalBenefitValue = Number(preset.benefit) || 0;
 
   document.getElementById('cardNote').innerText = preset.note;
-document.getElementById('sourceBox').innerText = preset.source;
+  document.getElementById('sourceBox').innerText = preset.source;
 
-applyValueStyle();
+  applyValueStyle();
 
-const cardImage = document.getElementById('cardImage');
+  const cardImage = document.getElementById('cardImage');
 
-const imageMap = {
-  'hilton-basic': 'images/hilton-basic.png',
-  'hilton-premium': 'images/hilton-premium.png',
-  'marriott-basic': 'images/marriott-basic.png',
-  'marriott-premium': 'images/marriott-premium.png',
-  'ana-wide-gold': 'images/ana-gold.png'
-};
+  const imageMap = {
+    'hilton-basic': 'images/hilton-basic.png',
+    'hilton-premium': 'images/hilton-premium.png',
+    'marriott-basic': 'images/marriott-basic.png',
+    'marriott-premium': 'images/marriott-premium.png',
+    'ana-wide-gold': 'images/ana-gold.png'
+  };
 
-if (imageMap[selected]) {
-  cardImage.src = imageMap[selected];
-  cardImage.style.display = 'block';
-} else {
-  cardImage.style.display = 'none';
+  if (imageMap[selected]) {
+    cardImage.src = imageMap[selected];
+    cardImage.style.display = 'block';
+  } else {
+    cardImage.src = '';
+    cardImage.style.display = 'none';
+  }
 }
-
-
-     
-      let originalBenefitValue = null;
-
 function applyValueStyle() {
   const style = document.getElementById('valueStyle').value;
   const benefitInput = document.getElementById('benefit');
