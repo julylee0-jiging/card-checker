@@ -532,10 +532,9 @@ detail.innerHTML =
     color:#344054;
   ">
     <strong>判定根拠</strong><br><br>
-    <br><br>
-<strong>おすすめ傾向</strong><br><br>
-${recommendText}
-    ${reasonText}
+    ${reasonText}<br><br>
+    <strong>おすすめ傾向</strong><br><br>
+    ${recommendText}
   </div>
 
   <div style="
@@ -554,13 +553,15 @@ ${recommendText}
     合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br>
     カード年会費：約 <strong>${Math.round(annualFee).toLocaleString()}円</strong><br>
     年会費との差額：約 <strong>${Math.round(profit).toLocaleString()}円</strong>
+  </div>
 
-      <div style="
+  <div style="
     margin-top:18px;
     text-align:center;
   ">
     <a href="https://www.youtube.com/@iwassan50s"
        target="_blank"
+       rel="noopener noreferrer"
        style="
          display:inline-block;
          padding:14px 18px;
@@ -573,7 +574,6 @@ ${recommendText}
        ">
       ▼ いわっさんの解説動画を見る
     </a>
-  </div>
   </div>`;
 
       result.scrollIntoView({ behavior: 'smooth' });
