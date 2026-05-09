@@ -462,6 +462,14 @@ function applyCardPreset() {
     'marriott-premium': 'images/marriott-premium.png',
     'ana-wide-gold': 'images/ana-gold.png'
   };
+const badgeMap = {
+  'hilton-basic': 'ホテル特化',
+  'hilton-premium': 'ホテル特化・上級向け',
+  'marriott-basic': '旅行特化',
+  'marriott-premium': '旅行特化・高年会費',
+  'ana-wide-gold': 'マイル重視'
+};
+     
 
   if (imageMap[selected]) {
     cardImage.src = imageMap[selected];
@@ -470,6 +478,15 @@ function applyCardPreset() {
     cardImage.src = '';
     cardImage.style.display = 'none';
   }
+const cardBadge = document.getElementById('cardBadge');
+
+if (badgeMap[selected]) {
+  cardBadge.innerText = badgeMap[selected];
+  cardBadge.style.display = 'inline-block';
+} else {
+  cardBadge.innerText = '';
+  cardBadge.style.display = 'none';
+}
 }
 function applyValueStyle() {
   const style = document.getElementById('valueStyle').value;
