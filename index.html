@@ -487,13 +487,37 @@ recoveryRateBox.innerHTML =
   回収率`;
       comment.innerText = commentText;
 
-      detail.innerHTML = `
-        <strong>内訳</strong><br>
-        ポイント還元額：約 <strong>${Math.round(pointValue).toLocaleString()}円</strong><br>
-        特典価値：約 <strong>${Math.round(benefit).toLocaleString()}円</strong><br>
-        合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br>
-        カード年会費：約 <strong>${Math.round(annualFee).toLocaleString()}円</strong>
-      `;
+   let reasonText = '';
+
+if (profit > 0) {
+  reasonText =
+    `年間価値が年会費を約${Math.round(profit).toLocaleString()}円上回っています。`;
+} else {
+  reasonText =
+    `年間価値が年会費を約${Math.abs(Math.round(profit)).toLocaleString()}円下回っています。`;
+}
+
+if (benefit >= annualFee * 0.5) {
+  reasonText += '<br><br>特典価値の影響が大きい結果です。';
+}
+
+if (rate >= 1.5) {
+  reasonText += '<br>実質還元率を高めに設定しています。';
+}
+
+detail.innerHTML =
+  `<div style="
+    margin-top:20px;
+    padding:16px;
+    background:#f8fafc;
+    border-radius:12px;
+    line-height:1.8;
+    font-size:14px;
+    color:#344054;
+  ">
+    <strong>判定根拠</strong><br><br>
+    ${reasonText}
+  </div>`;
 
       result.scrollIntoView({ behavior: 'smooth' });
     }
