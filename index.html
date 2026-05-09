@@ -517,6 +517,24 @@ detail.innerHTML =
   ">
     <strong>判定根拠</strong><br><br>
     ${reasonText}
+  </div>
+
+  <div style="
+    margin-top:14px;
+    padding:16px;
+    background:#ffffff;
+    border-radius:12px;
+    line-height:1.8;
+    font-size:14px;
+    color:#344054;
+    border:1px solid #e4e7ec;
+  ">
+    <strong>内訳</strong><br><br>
+    ポイント還元額：約 <strong>${Math.round(pointValue).toLocaleString()}円</strong><br>
+    特典価値：約 <strong>${Math.round(benefit).toLocaleString()}円</strong><br>
+    合計価値：約 <strong>${Math.round(totalReturn).toLocaleString()}円</strong><br>
+    カード年会費：約 <strong>${Math.round(annualFee).toLocaleString()}円</strong><br>
+    年会費との差額：約 <strong>${Math.round(profit).toLocaleString()}円</strong>
   </div>`;
 
       result.scrollIntoView({ behavior: 'smooth' });
