@@ -430,17 +430,26 @@ function applyCardPreset() {
 
   document.getElementById('cardNote').innerText = preset.note;
 document.getElementById('sourceBox').innerText = preset.source;
-     const cardImage = document.getElementById('cardImage');
+
+applyValueStyle();
+
+const cardImage = document.getElementById('cardImage');
 
 const imageMap = {
-  'hilton-premium': 'images/hilton-premium.png'
+  'hilton-basic': 'images/hilton-basic.png',
+  'hilton-premium': 'images/hilton-premium.png',
+  'marriott-basic': 'images/marriott-basic.png',
+  'marriott-premium': 'images/marriott-premium.png',
+  'ana-wide-gold': 'images/ana-gold.png'
 };
 
-if (imageMap[cardType]) {
-  cardImage.src = imageMap[cardType];
+if (imageMap[selected]) {
+  cardImage.src = imageMap[selected];
   cardImage.style.display = 'block';
 } else {
   cardImage.style.display = 'none';
+}
+
 }
   applyValueStyle();
 }
