@@ -280,20 +280,7 @@ select:focus {
 </select>
 
 <div style="text-align:center;margin-top:16px;">
-<div
-  id="popularBadge"
-  style="
-    display:none;
-    margin:8px auto 12px;
-    width:fit-content;
-    padding:6px 12px;
-    border-radius:999px;
-    background:#111827;
-    color:#ffffff;
-    font-size:12px;
-    font-weight:bold;
-  ">
-</div>
+
   <img
     id="cardImage"
     src=""
@@ -483,15 +470,7 @@ const badgeMap = {
     cardImage.style.display = 'none';
   }
 const cardBadge = document.getElementById('cardBadge');
-     const popularBadge = document.getElementById('popularBadge');
-
-if (popularMap[selected]) {
-  popularBadge.innerText = popularMap[selected];
-  popularBadge.style.display = 'inline-block';
-} else {
-  popularBadge.innerText = '';
-  popularBadge.style.display = 'none';
-}
+  
 
 if (badgeMap[selected]) {
   cardBadge.innerText = badgeMap[selected];
