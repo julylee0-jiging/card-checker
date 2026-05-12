@@ -19,22 +19,33 @@ gtag('config', 'G-6TWXJLBELP');
   <title>いわっさん年会費回収チェッカー</title>
 
   <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      background: linear-gradient(180deg, #f3f5f8 0%, #e9edf3 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      color: #263238;
-    }
+   body {
+  margin: 0;
+  padding: 20px;
 
-    .container {
-      max-width: 560px;
-      margin: auto;
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 26px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
-    }
+  background:
+    radial-gradient(circle at top, rgba(24,32,48,0.95) 0%, #05070b 72%);
+
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  color: #f5f5f5;
+}
+
+ .container {
+  max-width: 560px;
+  margin: auto;
+
+  background: rgba(10, 14, 22, 0.92);
+
+  border-radius: 22px;
+  padding: 26px;
+
+  border: 1px solid rgba(212,175,55,0.35);
+
+  box-shadow:
+    0 0 28px rgba(0,0,0,0.45),
+    inset 0 0 12px rgba(255,255,255,0.03);
+}
 
     h1 {
       font-size: 26px;
@@ -62,22 +73,37 @@ gtag('config', 'G-6TWXJLBELP');
     }
 
     input {
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      border: 1px solid #d0d5dd;
-      border-radius: 12px;
-      box-sizing: border-box;
-      background: #ffffff;
-    }
-       select {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+
+  border: 1px solid rgba(212,175,55,0.28);
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  background: rgba(255,255,255,0.05);
+  color: #f5f5f5;
+
+  backdrop-filter: blur(6px);
+}
+   select {
   width: 100%;
   padding: 15px;
   font-size: 17px;
-  border: 1px solid #d0d5dd;
+
+  border: 1px solid rgba(212,175,55,0.28);
   border-radius: 12px;
+
   box-sizing: border-box;
-  background: #ffffff;
+
+  background: rgba(255,255,255,0.05);
+  color: #f5f5f5;
+
+  backdrop-filter: blur(6px);
+}
+       input::placeholder {
+  color: rgba(255,255,255,0.38);
 }
 
 select:focus {
