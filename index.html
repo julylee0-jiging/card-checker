@@ -451,6 +451,8 @@ select:focus {
         <div class="recovery-rate" id="recoveryRate"></div>
 
         <div class="comment" id="comment"></div>
+
+        <div id="applyButtonBox"></div>
       </div>
 
       <div class="breakdown" id="detail"></div>
@@ -587,7 +589,8 @@ select:focus {
        
     <div class="footer">
       ※このチェッカーは簡易計算です。<br>
-      マイル価値、キャンペーン、税金支払い時の還元率などは個別にご確認ください。
+      マイル価値、キャンペーン、税金支払い時の還元率などは個別にご確認ください。<br>
+      ※本ページには広告・アフィリエイトリンクが含まれます。
     </div>
 
   </div>
@@ -620,14 +623,18 @@ const cardPresets = {
     rate: '',
     benefit: 30000,
     note: 'Marriott Bonvoy アメックス一般カードの簡易目安です。',
-    source: 'Marriott Bonvoy アメリカン・エキスプレス・カードは、公式上、通常利用で100円＝2 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝5ポイント、対象航空会社・外貨払いでは100円＝3ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
+    source: 'Marriott Bonvoy アメリカン・エキスプレス・カードは、公式上、通常利用で100円＝2 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝5ポイント、対象航空会社・外貨払いでは100円＝3ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。',
+    affiliateLink: 'https://m.hapitas.jp/item/detail/itemid/82591?i=20906329&route=appText&apn=itemsharelink',
+    affiliateLabel: 'Marriott Bonvoy アメックス(一般)に申し込む'
   },
   'marriott-premium': {
     annualFee: 82500,
     rate: '',
     benefit: 60000,
     note: 'Marriott Bonvoy アメックス・プレミアムの簡易目安です。',
-    source: 'Marriott Bonvoy アメリカン・エキスプレス・プレミアム・カードは、公式上、通常利用で100円＝3 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝6ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。'
+    source: 'Marriott Bonvoy アメリカン・エキスプレス・プレミアム・カードは、公式上、通常利用で100円＝3 Marriott Bonvoyポイント、Marriott Bonvoy参加ホテルでは100円＝6ポイントです。実質還元率は1ポイントを何円で見るかにより変わるため、円換算で手入力してください。',
+    affiliateLink: 'https://m.hapitas.jp/item/detail/itemid/82610?i=20906329&route=appText&apn=itemsharelink',
+    affiliateLabel: 'Marriott Bonvoy アメックス・プレミアムに申し込む'
   },
   'ana-wide-gold': {
     annualFee: '15400',
@@ -722,6 +729,7 @@ function applyValueStyle() {
   styleNote.innerText = note;
 }
     function calculate() {
+      const selectedCard = document.getElementById('cardSelect').value;
       const annualFee = Number(document.getElementById('annualFee').value);
       const usage = Number(document.getElementById('usage').value);
       const rate = Number(document.getElementById('rate').value);
@@ -743,6 +751,7 @@ function applyValueStyle() {
       const recoveryRateBox = document.getElementById('recoveryRate');
       const comment = document.getElementById('comment');
       const detail = document.getElementById('detail');
+      const applyButtonBox = document.getElementById('applyButtonBox');
 
       result.style.display = 'block';
 
@@ -778,6 +787,36 @@ recoveryRateBox.innerHTML =
   </span><br>
   回収率`;
       comment.innerText = commentText;
+
+      // カードごとの申し込みリンク（対応済みのカードのみ表示）
+      const preset = cardPresets[selectedCard];
+      if (preset && preset.affiliateLink && profit >= 0) {
+        applyButtonBox.innerHTML = `
+          <a href="${preset.affiliateLink}"
+             target="_blank"
+             rel="noopener noreferrer sponsored"
+             style="
+               display:block;
+               width:100%;
+               box-sizing:border-box;
+               padding:16px 18px;
+               background:linear-gradient(135deg,#d4af37,#f1d27a);
+               color:#111111;
+               text-decoration:none;
+               border-radius:14px;
+               font-weight:bold;
+               font-size:16px;
+               text-align:center;
+               box-shadow:0 6px 18px rgba(0,0,0,0.18);
+             ">
+            💳 ${preset.affiliateLabel}
+          </a>
+          <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5);text-align:center;">
+            ※本リンクには広告(アフィリエイト)を含みます
+          </div>`;
+      } else {
+        applyButtonBox.innerHTML = '';
+      }
 
    let reasonText = '';
          let recommendText = '';
