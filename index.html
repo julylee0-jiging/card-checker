@@ -407,6 +407,7 @@ select:focus {
       box-shadow:0 8px 20px rgba(0,0,0,0.12);
     "
   >
+  <div id="cardImageNote" style="display:none;margin-top:8px;font-size:12px;color:rgba(255,255,255,0.7);">券面はイメージです。</div>
 </div>
 
 
@@ -858,7 +859,16 @@ function applyCardPreset() {
     'hilton-premium': 'images/hilton-premium.png',
     'marriott-basic': 'images/marriott-basic.png',
     'marriott-premium': 'images/marriott-premium.png',
-    'ana-wide-gold': 'images/ana-gold.png'
+    'ana-wide-gold': 'images/ana-gold.png',
+    'ana-general': 'images/ana-general.png',
+    'ana-wide': 'images/ana-wide.png',
+    'ana-jcb-premium': 'images/ana-jcb-premium.png',
+    'ana-visa-platinum': 'images/ana-visa-platinum.png',
+    'jal-regular': 'images/jal-regular.png',
+    'jal-club-a': 'images/jal-club-a.png',
+    'jal-club-a-gold': 'images/jal-club-a-gold.png',
+    'jal-platinum': 'images/jal-platinum.png',
+    'jal-platinum-pro': 'images/jal-platinum-pro.png'
   };
 const badgeMap = {
   'hilton-basic': 'ホテル特化',
@@ -870,10 +880,14 @@ const badgeMap = {
 
   if (imageMap[selected]) {
     cardImage.src = imageMap[selected];
+    cardImage.alt = document.getElementById('cardSelect').selectedOptions[0].text;
     cardImage.style.display = 'block';
+    document.getElementById('cardImageNote').style.display = 'block';
   } else {
     cardImage.src = '';
+    cardImage.alt = '';
     cardImage.style.display = 'none';
+    document.getElementById('cardImageNote').style.display = 'none';
   }
 const cardBadge = document.getElementById('cardBadge');
 if (!cardBadge) return;
