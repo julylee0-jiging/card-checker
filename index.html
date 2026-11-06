@@ -419,6 +419,34 @@ select:focus {
 <div class="source-box" id="sourceBox">
   カードを選択すると、ポイント付与条件の補足が表示されます。
 </div>
+<div id="mileBox" style="
+  display:none;
+  margin-top:16px;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid rgba(212,175,55,0.38);
+  background:rgba(255,255,255,0.04);
+">
+  <div style="font-size:13px;color:rgba(255,255,255,0.8);">このカードの還元率の目安</div>
+  <div id="mileHeadline" style="margin-top:6px;font-size:22px;font-weight:bold;color:#f6e2a6;line-height:1.5;"></div>
+  <div id="mileCourseWrap">
+    <label>マイルのコース</label>
+    <select id="mileCourse" onchange="applyMileRate(true)"></select>
+  </div>
+  <label>1マイルを何円で見るか</label>
+  <select id="mileValue" onchange="applyMileRate(false)">
+    <option value="1" selected>1円</option>
+    <option value="1.5">1.5円</option>
+    <option value="2">2円</option>
+  </select>
+  <div style="margin-top:8px;font-size:13px;line-height:1.7;color:rgba(255,255,255,0.8);">
+    特典航空券に使う人は、1.5円や2円でも試してください。
+  </div>
+  <div id="mileList" style="margin-top:12px;font-size:14px;line-height:1.8;color:rgba(255,255,255,0.85);"></div>
+  <div style="margin-top:8px;font-size:12px;line-height:1.7;color:rgba(255,255,255,0.7);">
+    ※通常の買い物の目安です。特約店・提携店、航空券の購入、マイルの対象外になる支払いでは変わります。%は1マイルを円に置きかえた計算で、現金で戻るわけではありません。マイルを使わなければ、この分の得はありません。
+  </div>
+</div>
 <label>利用スタイル</label>
 <select id="valueStyle" onchange="applyValueStyle()">
   <option value="standard">標準</option>
@@ -651,74 +679,151 @@ const cardPresets = {
     rate: '',
     benefit: '',
     note: 'ANAワイドゴールドカード（JCB・VISA・Mastercard）の年会費です。ANAダイナースは33,000円、ANAアメックス・ゴールドは42,900円です。該当する方は、年会費を書き換えてください。',
-    source: 'ANAゴールドカードは、ANA公式上、クレジットカード会社のポイントをマイルへ移行した場合、100円の支払いにつき1マイル相当が目安です。ただし、発行会社・移行コース・ANAカードマイルプラス対象利用などで条件が変わるため、実質還元率は手入力してください。'
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは2,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の25%です。ANAゴールドカードは、ANA公式上、クレジットカード会社のポイントをマイルへ移行した場合、100円の支払いにつき1マイル相当が目安です。ただし、発行会社・移行コース・ANAカードマイルプラス対象利用などで条件が変わります。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'ana-general': {
     annualFee: 2200,
     rate: '',
     benefit: '',
-    note: 'ANA一般カード（JCB・VISA・Mastercard）の年会費です。初年度は無料です。ANAアメックスは7,700円です。該当する方は、年会費を書き換えてください。ANA JCB CARD FIRSTは条件が違います。',
-    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは1,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の10%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。手数料がかかるコースを選ぶ人は、その分を年会費に足して入力してください。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    note: 'ANA一般カード（JCB・VISA・Mastercard）の年会費です。初年度は無料です。ANAアメックスは7,700円です。該当する方は、年会費を書き換えてください。ANAアメックスは、VISA・Masterのコースを選ぶと同じ計算になります。ANA JCB CARD FIRSTは条件が違います。',
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは1,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の10%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'ana-wide': {
     annualFee: 7975,
     rate: '',
     benefit: '',
     note: 'ANAワイドカード（JCB・VISA・Mastercard）の年会費です。',
-    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは2,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の25%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。手数料がかかるコースを選ぶ人は、その分を年会費に足して入力してください。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは2,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の25%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'ana-jcb-premium': {
     annualFee: 77000,
     rate: '',
     benefit: '',
     note: 'ANA JCBカード プレミアムの年会費です。',
-    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。マイル移行は200円＝2マイルで、手数料はかかりません。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。200円ごとに通常ポイント1ポイント（2マイル）とボーナスポイント1ポイント（0.6マイル）が付き、合計2.6マイル相当です。移行手数料はかかりません。ボーナスポイントは自動では移行されず、2,500ポイント以上で申し込みます。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'ana-visa-platinum': {
     annualFee: 96800,
     rate: '',
     benefit: '',
     note: 'ANA VISAプラチナ プレミアムカードの年会費です。',
-    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。マイル移行は3倍コースで200円＝3マイル、手数料はかかりません。対象は、カードの利用で貯まるANAマイレージ移行可能ポイントです。実質還元率は1マイルを何円で見るかで変わります（例：200円＝3マイルなら、1マイル1円で1.5%、1.5円で2.25%、2円で3%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。マイル移行は3倍コースで200円＝3マイル、手数料はかかりません。対象は、カードの利用で貯まるANAマイレージ移行可能ポイントです。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'jal-regular': {
     annualFee: 2200,
     rate: '',
     benefit: '',
     note: 'JALカード 普通カードの年会費です。入会後1年間は無料です（対象外の場合あり）。JALアメックスは6,600円です。該当する方は、年会費を書き換えてください。',
-    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになるので、入る人は年会費に4,950円を足して入力してください。毎年初回搭乗ボーナスは1,000マイル、搭乗ごとのボーナスはフライトマイルの10%です。実質還元率は1マイルを何円で見るかで変わります（例：200円＝1マイルなら、1マイル1円で0.5%、1.5円で0.75%、2円で1%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになります。毎年初回搭乗ボーナスは1,000マイル、搭乗ごとのボーナスはフライトマイルの10%です。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'jal-club-a': {
     annualFee: 11000,
     rate: '',
     benefit: '',
     note: 'JALカード CLUB-Aカードの年会費です。',
-    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになるので、入る人は年会費に4,950円を足して入力してください。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：200円＝1マイルなら、1マイル1円で0.5%、1.5円で0.75%、2円で1%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになります。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'jal-club-a-gold': {
     annualFee: 17600,
     rate: '',
     benefit: '',
     note: 'JALカード CLUB-Aゴールドカードの年会費です。JALカードSuicaとJALアメックスは20,900円、JALダイナースは34,100円です。該当する方は、年会費を書き換えてください。',
-    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'jal-platinum': {
     annualFee: 34100,
     rate: '',
     benefit: '',
     note: 'JALカード プラチナの年会費です。',
-    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   },
   'jal-platinum-pro': {
     annualFee: 77000,
     rate: '',
     benefit: '',
     note: 'JALカード プラチナ Proの年会費です。',
-    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   }
 };
 
 let originalBenefitValue = null;
+
+const anaCourses = [
+  { label: '200円＝1マイル（手数料なし）', text: '200円＝1マイル', per100: 0.5, extraFee: 0 },
+  { label: '200円＝2マイル／JCB（年5,500円）', text: '200円＝2マイル', per100: 1, extraFee: 5500 },
+  { label: '200円＝2マイル／VISA・Master（年6,600円）', text: '200円＝2マイル', per100: 1, extraFee: 6600 }
+];
+const jalCourses = [
+  { label: '通常（200円＝1マイル）', text: '200円＝1マイル', per100: 0.5, extraFee: 0 },
+  { label: 'ショッピングマイル・プレミアムに入る（年4,950円）', text: '100円＝1マイル', per100: 1, extraFee: 4950 }
+];
+const hundredYenOneMile = [{ text: '100円＝1マイル', per100: 1, extraFee: 0 }];
+const mileCourses = {
+  'ana-general': anaCourses,
+  'ana-wide': anaCourses,
+  'ana-wide-gold': [{ text: '200円＝2マイル', per100: 1, extraFee: 0 }],
+  'ana-jcb-premium': [{ text: '200円＝2.6マイル', per100: 1.3, extraFee: 0 }],
+  'ana-visa-platinum': [{ text: '200円＝3マイル', per100: 1.5, extraFee: 0 }],
+  'jal-regular': jalCourses,
+  'jal-club-a': jalCourses,
+  'jal-club-a-gold': hundredYenOneMile,
+  'jal-platinum': hundredYenOneMile,
+  'jal-platinum-pro': hundredYenOneMile
+};
+
+let currentExtraFee = 0;
+let autoMileRate = null;
+
+function setupMileBox(selected) {
+  currentExtraFee = 0;
+  const courses = mileCourses[selected];
+  const mileBox = document.getElementById('mileBox');
+
+  if (!courses) {
+    mileBox.style.display = 'none';
+    return;
+  }
+
+  const courseSelect = document.getElementById('mileCourse');
+  courseSelect.innerHTML = '';
+  courses.forEach((course, index) => {
+    const option = document.createElement('option');
+    option.value = index;
+    option.textContent = course.label || course.text;
+    courseSelect.appendChild(option);
+  });
+
+  document.getElementById('mileCourseWrap').style.display = courses.length > 1 ? 'block' : 'none';
+  mileBox.style.display = 'block';
+  applyMileRate(true);
+}
+
+function applyMileRate(updateFee) {
+  const selected = document.getElementById('cardSelect').value;
+  const courses = mileCourses[selected];
+  if (!courses) return;
+
+  const course = courses[Number(document.getElementById('mileCourse').value) || 0];
+  const mileValue = Number(document.getElementById('mileValue').value);
+  const rateOf = (yen) => Math.round(course.per100 * yen * 100) / 100;
+
+  document.getElementById('rate').value = rateOf(mileValue);
+  autoMileRate = rateOf(mileValue);
+  if (updateFee) {
+    const feeInput = document.getElementById('annualFee');
+    feeInput.value = Number(feeInput.value) - currentExtraFee + course.extraFee;
+    currentExtraFee = course.extraFee;
+  }
+
+  document.getElementById('mileHeadline').innerText =
+    `${course.text}（1マイル${mileValue}円で計算すると還元率 ${rateOf(mileValue)}%）`;
+
+  let list = `1マイル1円なら ${rateOf(1)}%／1.5円なら ${rateOf(1.5)}%／2円なら ${rateOf(2)}%`;
+  if (course.extraFee > 0) {
+    list += `\nこのコースの年${course.extraFee.toLocaleString()}円は、カード年会費に足しています。`;
+  }
+  document.getElementById('mileList').innerText = list;
+}
 
 function applyCardPreset() {
   const selected = document.getElementById('cardSelect').value;
@@ -734,6 +839,7 @@ function applyCardPreset() {
   document.getElementById('sourceBox').innerText = preset.source;
 
   applyValueStyle();
+  setupMileBox(selected);
 
   const cardImage = document.getElementById('cardImage');
 
@@ -928,7 +1034,9 @@ if (benefit >= annualFee * 0.5) {
   reasonText += '<br><br>特典価値の影響が大きい結果です。';
 }
 
-if (rate >= 1.5) {
+if (mileCourses[selectedCard] && rate === autoMileRate) {
+  reasonText += `<br>1マイルを${document.getElementById('mileValue').value}円で計算しています。1マイルの価値は使い方で上下するので、ほかの金額でも試してみてください。`;
+} else if (rate >= 1.5) {
   reasonText += '<br>実質還元率を高めに設定しています。';
 }
 
