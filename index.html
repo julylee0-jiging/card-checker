@@ -373,6 +373,7 @@ select:focus {
       クレジットカードの年会費、<br>
       本当に元が取れているか簡単診断できます。
     </div>
+    <div class="preset-note" style="text-align:center;color:rgba(255,255,255,0.8);">PR：本ページには広告・アフィリエイトリンクが含まれます。</div>
 <label>カードを選択</label>
 <select id="cardSelect" onchange="applyCardPreset()">
  
@@ -381,7 +382,16 @@ select:focus {
   <option value="hilton-premium">ヒルトン・オナーズ アメックス・プレミアム</option>
   <option value="marriott-basic">Marriott Bonvoy アメックス一般</option>
   <option value="marriott-premium">Marriott Bonvoy アメックス・プレミアム</option>
+  <option value="ana-general">ANA一般カード</option>
+  <option value="ana-wide">ANAワイドカード</option>
   <option value="ana-wide-gold">ANAワイドゴールドカード</option>
+  <option value="ana-jcb-premium">ANA JCBカード プレミアム</option>
+  <option value="ana-visa-platinum">ANA VISAプラチナ プレミアムカード</option>
+  <option value="jal-regular">JALカード 普通カード</option>
+  <option value="jal-club-a">JALカード CLUB-Aカード</option>
+  <option value="jal-club-a-gold">JALカード CLUB-Aゴールドカード</option>
+  <option value="jal-platinum">JALカード プラチナ</option>
+  <option value="jal-platinum-pro">JALカード プラチナ Pro</option>
 </select>
 
 <div style="text-align:center;margin-top:16px;">
@@ -404,7 +414,7 @@ select:focus {
        
 
 <div class="preset-note" id="cardNote">
-  ※カードを選ぶと、年会費・還元率・特典価値例が自動入力されます。
+  ※カードを選ぶと、年会費が自動入力されます。実質還元率と特典価値は、入っていなければご自身で入力してください。
 </div>
 <div class="source-box" id="sourceBox">
   カードを選択すると、ポイント付与条件の補足が表示されます。
@@ -433,7 +443,7 @@ select:focus {
   ※ホテル系ポイントは1ポイントの価値が利用方法で変わるため、公式のポイント付与率をそのまま%換算していません。
 </div>
 
-    <label>ホテル特典・ラウンジなどの価値（年間・円）</label>
+    <label>ホテル特典・ラウンジ・ボーナスマイルなどの価値（年間・円）</label>
     <input type="number" id="benefit" placeholder="例：30000">
 
     <button onclick="calculate()">診断する</button>
@@ -640,10 +650,75 @@ const cardPresets = {
     annualFee: '15400',
     rate: '',
     benefit: '',
-    note: 'ANA系カードはブランド・移行コース・年会費で条件が変わるため、いったん手入力してください。',
+    note: 'ANAワイドゴールドカード（JCB・VISA・Mastercard）の年会費です。ANAダイナースは33,000円、ANAアメックス・ゴールドは42,900円です。該当する方は、年会費を書き換えてください。',
     source: 'ANAゴールドカードは、ANA公式上、クレジットカード会社のポイントをマイルへ移行した場合、100円の支払いにつき1マイル相当が目安です。ただし、発行会社・移行コース・ANAカードマイルプラス対象利用などで条件が変わるため、実質還元率は手入力してください。'
+  },
+  'ana-general': {
+    annualFee: 2200,
+    rate: '',
+    benefit: '',
+    note: 'ANA一般カード（JCB・VISA・Mastercard）の年会費です。初年度は無料です。ANAアメックスは7,700円です。該当する方は、年会費を書き換えてください。ANA JCB CARD FIRSTは条件が違います。',
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは1,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の10%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。手数料がかかるコースを選ぶ人は、その分を年会費に足して入力してください。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'ana-wide': {
+    annualFee: 7975,
+    rate: '',
+    benefit: '',
+    note: 'ANAワイドカード（JCB・VISA・Mastercard）の年会費です。',
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは2,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の25%です。マイル移行は、200円＝2マイルのコースが年5,500円（JCB）または6,600円（VISA・Mastercard）、200円＝1マイルのコースは手数料なしです。手数料がかかるコースを選ぶ人は、その分を年会費に足して入力してください。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'ana-jcb-premium': {
+    annualFee: 77000,
+    rate: '',
+    benefit: '',
+    note: 'ANA JCBカード プレミアムの年会費です。',
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。マイル移行は200円＝2マイルで、手数料はかかりません。実質還元率は1マイルを何円で見るかで変わります（例：200円＝2マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'ana-visa-platinum': {
+    annualFee: 96800,
+    rate: '',
+    benefit: '',
+    note: 'ANA VISAプラチナ プレミアムカードの年会費です。',
+    source: 'ANA公式のラインアップ（2026年8月現在）では、入会・継続ボーナスは10,000マイル、搭乗ボーナスは区間基本マイレージ×クラス・運賃倍率の50%です。マイル移行は3倍コースで200円＝3マイル、手数料はかかりません。対象は、カードの利用で貯まるANAマイレージ移行可能ポイントです。実質還元率は1マイルを何円で見るかで変わります（例：200円＝3マイルなら、1マイル1円で1.5%、1.5円で2.25%、2円で3%）。1マイルの価値は、使い方で上下します。毎年のボーナスマイルを実際に使う人は、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'jal-regular': {
+    annualFee: 2200,
+    rate: '',
+    benefit: '',
+    note: 'JALカード 普通カードの年会費です。入会後1年間は無料です（対象外の場合あり）。JALアメックスは6,600円です。該当する方は、年会費を書き換えてください。',
+    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになるので、入る人は年会費に4,950円を足して入力してください。毎年初回搭乗ボーナスは1,000マイル、搭乗ごとのボーナスはフライトマイルの10%です。実質還元率は1マイルを何円で見るかで変わります（例：200円＝1マイルなら、1マイル1円で0.5%、1.5円で0.75%、2円で1%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'jal-club-a': {
+    annualFee: 11000,
+    rate: '',
+    benefit: '',
+    note: 'JALカード CLUB-Aカードの年会費です。',
+    source: 'JALカード公式の比較表では、ショッピングマイルは200円＝1マイルです。ショッピングマイル・プレミアム（年4,950円）に入ると100円＝1マイルになるので、入る人は年会費に4,950円を足して入力してください。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：200円＝1マイルなら、1マイル1円で0.5%、1.5円で0.75%、2円で1%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'jal-club-a-gold': {
+    annualFee: 17600,
+    rate: '',
+    benefit: '',
+    note: 'JALカード CLUB-Aゴールドカードの年会費です。JALカードSuicaとJALアメックスは20,900円、JALダイナースは34,100円です。該当する方は、年会費を書き換えてください。',
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'jal-platinum': {
+    annualFee: 34100,
+    rate: '',
+    benefit: '',
+    note: 'JALカード プラチナの年会費です。',
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
+  },
+  'jal-platinum-pro': {
+    annualFee: 77000,
+    rate: '',
+    benefit: '',
+    note: 'JALカード プラチナ Proの年会費です。',
+    source: 'JALカード公式の比較表では、ショッピングマイル・プレミアムに自動で入るので、ショッピングマイルは100円＝1マイルです（追加の費用なし）。毎年初回搭乗ボーナスは2,000マイル、搭乗ごとのボーナスはフライトマイルの25%です。実質還元率は1マイルを何円で見るかで変わります（例：100円＝1マイルなら、1マイル1円で1%、1.5円で1.5%、2円で2%）。1マイルの価値は、使い方で上下します。毎年初回搭乗ボーナスは、その年に乗ってマイルを使う人だけ、マイル数×1マイルの円換算を特典価値の欄に入れてください。'
   }
 };
+
+let originalBenefitValue = null;
 
 function applyCardPreset() {
   const selected = document.getElementById('cardSelect').value;
@@ -676,11 +751,6 @@ const badgeMap = {
   'marriott-premium': '旅行特化・高年会費',
   'ana-wide-gold': 'マイル重視'
 };
-     const popularMap = {
-  'hilton-premium': '人気No.1',
-  'marriott-premium': '旅行派に人気',
-  'ana-wide-gold': '修行向け'
-};
 
   if (imageMap[selected]) {
     cardImage.src = imageMap[selected];
@@ -690,7 +760,7 @@ const badgeMap = {
     cardImage.style.display = 'none';
   }
 const cardBadge = document.getElementById('cardBadge');
-  
+if (!cardBadge) return;
 
 if (badgeMap[selected]) {
   cardBadge.innerText = badgeMap[selected];
@@ -725,11 +795,16 @@ function applyValueStyle() {
     note = 'マイル重視：マイルやポイント移行価値を少し高めに見積もります。';
   }
 
-  benefitInput.value = Math.round(baseBenefit * multiplier);
-  styleNote.innerText = note;
+  if (baseBenefit > 0) {
+    benefitInput.value = Math.round(baseBenefit * multiplier);
+    styleNote.innerText = note;
+  } else {
+    styleNote.innerText = 'このカードは特典価値の自動入力がないので、利用スタイルを変えても金額は変わりません。特典価値はご自身で入力してください。';
+  }
 }
     function calculate() {
       const selectedCard = document.getElementById('cardSelect').value;
+      const style = document.getElementById('valueStyle').value;
       const annualFee = Number(document.getElementById('annualFee').value);
       const usage = Number(document.getElementById('usage').value);
       const rate = Number(document.getElementById('rate').value);
@@ -737,6 +812,11 @@ function applyValueStyle() {
 
       if (!annualFee || annualFee <= 0) {
         alert('カード年会費を入力してください。');
+        return;
+      }
+
+      if (document.getElementById('rate').value === '') {
+        alert('実質還元率を入力してください。マイルのカードは、1マイルを何円で見るかで決まります。');
         return;
       }
 
@@ -811,7 +891,7 @@ recoveryRateBox.innerHTML =
              ">
             💳 ${preset.affiliateLabel}
           </a>
-          <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5);text-align:center;">
+          <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.8);text-align:center;">
             ※本リンクには広告(アフィリエイト)を含みます
           </div>`;
       } else {
@@ -865,8 +945,7 @@ detail.innerHTML =
     <strong>判定根拠</strong><br><br>
     ${reasonText}<br><br>
 
-    <strong>おすすめ傾向</strong><br><br>
-    ${recommendText}
+    ${recommendText ? `<strong>おすすめ傾向</strong><br><br>${recommendText}` : ''}
   </div>
 
   <div style="
